@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hex Color Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .input-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+    #preview {
+      width: 40px;
+      height: 40px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      background: white;
+    }
+    #message {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .valid {
+      color: green;
+    }
+    .invalid {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>Hexadecimal Color Code Validator</h2>
+  <div class="input-group">
+    <label for="color">Enter Hex Color:</label>
+    <input type="text" id="color" placeholder="#FFF or #FFFFFF">
+    <div id="preview"></div>
+  </div>
+  <div id="message"></div>
+
+  <script>
+    const colorInput = document.getElementById("color");
+    const previewBox = document.getElementById("preview");
+    const message = document.getElementById("message");
+
+  
+    const hexRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
+    colorInput.addEventListener("input", () => {
+      const value = colorInput.value.trim();
+
+      if (hexRegex.test(value)) {
+        message.textContent = "✅ Valid Hex Color Code";
+        message.className = "valid";
+        previewBox.style.backgroundColor = value;
+      } else {
+        message.textContent = "❌ Invalid format. Use #FFF or #FFFFFF";
+        message.className = "invalid";
+        previewBox.style.backgroundColor = "white";
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Username Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    #error {
+      font-weight: bold;
+      color: red;
+      margin-top: 10px;
+    }
+    #success {
+      font-weight: bold;
+      color: green;
+      margin-top: 10px;
+    }
+    button {
+      padding: 8px 15px;
+      border: none;
+      background: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <h2>Username Form</h2>
+  <form id="usernameForm">
+    <div class="input-group">
+      <label for="username">Enter Username:</label><br>
+      <input type="text" id="username" placeholder="3–16 letters, numbers, _">
+    </div>
+    <div id="message"></div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const usernameInput = document.getElementById("username");
+    const form = document.getElementById("usernameForm");
+    const message = document.getElementById("message");
+
+    
+    const usernameRegex = /^[a-zA-Z0-9_]{3,16}$/;
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault(); 
+      
+      if (usernameRegex.test(usernameInput.value)) {
+        message.textContent = "✅ Valid username!";
+        message.id = "success";
+      } else {
+        message.textContent = "❌ Invalid username. Use 3–16 letters, numbers, or underscores only.";
+        message.id = "error";
+      }
+    });
+  </script>
+</body>
+</html>

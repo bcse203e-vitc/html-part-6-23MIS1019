@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Password Match Check</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    #message {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .match {
+      color: green;
+    }
+    .no-match {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>Password Validation</h2>
+  <form>
+    <div class="input-group">
+      <label for="password">Password:</label><br>
+      <input type="password" id="password" placeholder="Enter password">
+    </div>
+    <div class="input-group">
+      <label for="confirmPassword">Confirm Password:</label><br>
+      <input type="password" id="confirmPassword" placeholder="Re-enter password">
+    </div>
+    <div id="message"></div>
+  </form>
+
+  <script>
+    const password = document.getElementById("password");
+    const confirmPassword = document.getElementById("confirmPassword");
+    const message = document.getElementById("message");
+
+    function checkMatch() {
+      if (password.value === "" && confirmPassword.value === "") {
+        message.textContent = "";
+        return;
+      }
+      if (password.value === confirmPassword.value) {
+        message.textContent = "✅ Passwords match";
+        message.className = "match";
+      } else {
+        message.textContent = "❌ Passwords do not match";
+        message.className = "no-match";
+      }
+    }
+
+    password.addEventListener("input", checkMatch);
+    confirmPassword.addEventListener("input", checkMatch);
+  </script>
+</body>
+</html>

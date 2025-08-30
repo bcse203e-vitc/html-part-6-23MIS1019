@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Phone Number Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+    .message {
+      margin-top: 6px;
+      font-size: 14px;
+      display: none;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Phone Validation</h2>
+    <form>
+      <label for="phone">Phone Number:</label>
+      <input type="text" id="phone" placeholder="(123) 456-7890 or 123-456-7890">
+      <small id="message" class="message"></small>
+    </form>
+  </div>
+
+  <script>
+    const phoneField = document.getElementById("phone");
+    const message = document.getElementById("message");
+
+    // Regex for US phone number formats
+    const regex = /^(\(\d{3}\)\s?\d{3}-\d{4}|\d{3}-\d{3}-\d{4})$/;
+
+    phoneField.addEventListener("input", function() {
+      const value = phoneField.value.trim();
+
+      if (value === "") {
+        message.style.display = "none";
+        return;
+      }
+
+      if (regex.test(value)) {
+        message.style.display = "block";
+        message.textContent = "Valid phone number ✔";
+        message.className = "message success";
+      } else {
+        message.style.display = "block";
+        message.textContent = "Invalid phone number ❌";
+        message.className = "message error";
+      }
+    });
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Phone Number Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    input {
+      padding: 8px;
+      width: 250px;
+      font-size: 1em;
+    }
+    .status {
+      margin-top: 5px;
+      font-size: 0.9em;
+    }
+    .valid {
+      color: green;
+    }
+    .invalid {
+      color: red;
+    }
+  </style>
+</head>
+<body>
+  <h2>Phone Number Validation</h2>
+  <label for="phone">Enter Phone Number:</label><br>
+  <input type="text" id="phone" placeholder="(123) 456-7890 or 123-456-7890">
+  <div id="status" class="status"></div>
+
+  <script>
+    const phoneInput = document.getElementById("phone");
+    const status = document.getElementById("status");
+
+    // Regex for US phone number formats: (123) 456-7890 or 123-456-7890
+    const phoneRegex = /^(\(\d{3}\)\s?\d{3}-\d{4}|\d{3}-\d{3}-\d{4})$/;
+
+    phoneInput.addEventListener("input", () => {
+      const value = phoneInput.value.trim();
+
+      if (value === "") {
+        status.textContent = "";
+        return;
+      }
+
+      if (phoneRegex.test(value)) {
+        status.textContent = "✅ Valid phone number";
+        status.className = "status valid";
+      } else {
+        status.textContent = "❌ Invalid format";
+        status.className = "status invalid";
+      }
+    });
+  </script>
+</body>
+</html>

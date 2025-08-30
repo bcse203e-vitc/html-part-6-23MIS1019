@@ -1,1 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Registration Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: bold;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+    input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+    .error {
+      color: red;
+      font-size: 13px;
+      display: none;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background: gray;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
 
+  <div class="form-container">
+    <h2>Registration Form</h2>
+    <form id="registrationForm">
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="Enter your name">
+        <small class="error" id="nameError">Name cannot be empty</small>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="text" id="email" placeholder="Enter your email">
+        <small class="error" id="emailError">Invalid email format</small>
+      </div>
+
+      <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" id="password" placeholder="Enter your password">
+        <small class="error" id="passwordError">Password must be at least 8 characters, include 1 uppercase and 1 number</small>
+      </div>
+
+      <button type="submit" id="submitBtn" disabled>Register</button>
+    </form>
+  </div>
+
+  <script>
+    const nameField = document.getElementById('name');
+    const emailField = document.getElementById('email');
+    const passwordField = document.getElementById('password');
+    const submitBtn = document.getElementById('submitBtn');
+
+    const nameError = document.getElementById('nameError');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    function validateName() {
+      if (nameField.value.trim() === "") {
+        nameError.style.display = "block";
+        return false;
+      } else {
+        nameError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validateEmail() {
+      const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!regex.test(emailField.value.trim())) {
+        emailError.style.display = "block";
+        return false;
+      } else {
+        emailError.style.display = "none";
+        return true;
+      }
+    }
+
+    function validatePassword() {
+      const regex = /^(?=.*[A-Z])(?=.*\d).{8,}$/;
+      if (!regex.test(passwordField.value.trim())) {
+        passwordError.style.display = "block";
+        return false;
+      } else {
+        passwordError.style.display = "none";
+        return true;
+      }
+    }
+
+    function enableSubmit() {
+      if (validateName() && validateEmail() && validatePassword()) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    }
+
+   
+    nameField.addEventListener('blur', validateName);
+    emailField.addEventListener('blur', validateEmail);
+    passwordField.addEventListener('blur', validatePassword);
+
+    nameField.addEventListener('input', enableSubmit);
+    emailField.addEventListener('input', enableSubmit);
+    passwordField.addEventListener('input', enableSubmit);
+
+    document.getElementById('registrationForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert("Registration Successful!");
+    });
+  </script>
+
+</body>
+</html>

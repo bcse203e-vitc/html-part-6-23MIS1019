@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Format Validation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .input-group {
+      margin-bottom: 15px;
+    }
+    #message {
+      font-weight: bold;
+      margin-top: 10px;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+    button {
+      padding: 8px 15px;
+      border: none;
+      background: #007BFF;
+      color: white;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Date Validation Form</h2>
+  <form id="dateForm">
+    <div class="input-group">
+      <label for="date">Enter Date (DD/MM/YYYY):</label><br>
+      <input type="text" id="date" placeholder="e.g. 25/08/2025">
+    </div>
+    <div id="message"></div>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const form = document.getElementById("dateForm");
+    const dateInput = document.getElementById("date");
+    const message = document.getElementById("message");
+
+  
+    const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault(); 
+
+      if (dateRegex.test(dateInput.value)) {
+        message.textContent = "✅ Valid date format!";
+        message.className = "success";
+      } else {
+        message.textContent = "❌ Invalid format! Please enter date as DD/MM/YYYY.";
+        message.className = "error";
+      }
+    });
+  </script>
+</body>
+</html>

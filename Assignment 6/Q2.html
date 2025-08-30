@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Email Validation on Blur</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .form-container {
+      background: #fff;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      width: 350px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 6px;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    input:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+    .message {
+      margin-top: 6px;
+      font-size: 14px;
+      display: none;
+    }
+    .error {
+      color: red;
+    }
+    .success {
+      color: green;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-container">
+    <h2>Email Validation</h2>
+    <form>
+      <label for="email">Email:</label>
+      <input type="text" id="email" placeholder="Enter your email">
+      <small id="message" class="message"></small>
+    </form>
+  </div>
+
+  <script>
+    const emailField = document.getElementById("email");
+    const message = document.getElementById("message");
+
+    emailField.onblur = function() {
+      const regex = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+      if (emailField.value.trim() === "") {
+        message.style.display = "block";
+        message.textContent = "Email cannot be empty";
+        message.className = "message error";
+      } else if (!regex.test(emailField.value.trim())) {
+        message.style.display = "block";
+        message.textContent = "Invalid email format ❌";
+        message.className = "message error";
+      } else {
+        message.style.display = "block";
+        message.textContent = "Valid email ✔";
+        message.className = "message success";
+      }
+    };
+  </script>
+</body>
+</html>

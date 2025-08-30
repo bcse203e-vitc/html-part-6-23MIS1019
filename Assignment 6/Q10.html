@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Form Builder</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    select, button, input {
+      margin: 5px;
+      padding: 6px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    .form-field {
+      margin: 10px 0;
+    }
+    .error {
+      color: red;
+      font-size: 14px;
+    }
+    .success {
+      color: green;
+      font-size: 14px;
+    }
+    .generated-input {
+      display: block;
+      margin-top: 5px;
+      padding: 6px;
+      width: 250px;
+    }
+  </style>
+</head>
+<body>
+  <h2>Dynamic Form Builder</h2>
+  
+  <label for="inputType">Choose Input Type:</label>
+  <select id="inputType">
+    <option value="text">Text</option>
+    <option value="email">Email</option>
+    <option value="password">Password</option>
+  </select>
+  <button id="addInput">Add Input</button>
+  
+  <form id="dynamicForm">
+    <h3>Generated Form:</h3>
+    <div id="formFields"></div>
+    <button type="submit">Submit</button>
+  </form>
+  
+  <script>
+    const addInputBtn = document.getElementById("addInput");
+    const inputTypeSelect = document.getElementById("inputType");
+    const formFields = document.getElementById("formFields");
+    const form = document.getElementById("dynamicForm");
+
+    
+    const regexPatterns = {
+      text: /^[a-zA-Z0-9_ ]{3,16}$/,        
+      email: /^[^@\s]+@[^@\s]+\.[^@\s]+$/,  
+      password: /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/ 
+    };
+
+    
+    addInputBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      const type = inputTypeSelect.value;
+
+      const wrapper = document.createElement("div");
+      wrapper.classList.add("form-field");
+
+      const label = document.createElement("label");
+      label.textContent = `${type.charAt(0).toUpperCase() + type.slice(1)}: `;
+
+      const input = document.createElement("input");
+      input.type = type === "text" ? "text" : type; 
+      input.classList.add("generated-input");
+      input.dataset.type = type;
+
+      const errorMsg = document.createElement("div");
+      errorMsg.classList.add("error");
+
+      wrapper.appendChild(label);
+      wrapper.appendChild(input);
+      wrapper.appendChild(errorMsg);
+
+      formFields.appendChild(wrapper);
+
+    
+      input.addEventListener("input", () => {
+        validateInput(input, errorMsg);
+      });
+    });
+
+   
+    function validateInput(input, errorMsg) {
+      const type = input.dataset.type;
+      const value = input.value.trim();
+
+      if (regexPatterns[type].test(value)) {
+        errorMsg.textContent = "✅ Valid " + type;
+        errorMsg.className = "success";
+      } else {
+        errorMsg.textContent = "❌ Invalid " + type;
+        errorMsg.className = "error";
+      }
+    }
+
+    
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      let allValid = true;
+
+      document.querySelectorAll(".generated-input").forEach((input) => {
+        const errorMsg = input.nextElementSibling;
+        if (!regexPatterns[input.dataset.type].test(input.value.trim())) {
+          validateInput(input, errorMsg);
+          allValid = false;
+        }
+      });
+
+      if (allValid) {
+        alert("✅ Form submitted successfully!");
+      } else {
+        alert("❌ Please fix validation errors before submitting.");
+      }
+    });
+  </script>
+</body>
+</html>

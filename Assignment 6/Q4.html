@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dynamic Hobbies Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    .hobby-input {
+      margin-bottom: 10px;
+    }
+    input {
+      padding: 6px;
+      width: 250px;
+      margin-right: 5px;
+    }
+    .error {
+      color: red;
+      font-size: 0.9em;
+      margin-left: 5px;
+    }
+    button {
+      padding: 6px 12px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h2>Hobbies Form</h2>
+  <form id="hobbyForm">
+    <div id="hobbyContainer">
+      <div class="hobby-input">
+        <input type="text" name="hobby[]" placeholder="Enter a hobby">
+        <span class="error"></span>
+      </div>
+    </div>
+    <button type="button" id="addHobbyBtn">Add Hobby</button>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+    const hobbyContainer = document.getElementById("hobbyContainer");
+    const addHobbyBtn = document.getElementById("addHobbyBtn");
+    const regex = /^[A-Za-z\s]+$/;
+
+   
+    function createHobbyInput() {
+      const div = document.createElement("div");
+      div.className = "hobby-input";
+
+      const input = document.createElement("input");
+      input.type = "text";
+      input.name = "hobby[]";
+      input.placeholder = "Enter a hobby";
+
+      const error = document.createElement("span");
+      error.className = "error";
+
+    
+      input.addEventListener("blur", () => {
+        if (input.value.trim() !== "" && !regex.test(input.value)) {
+          error.textContent = "Only alphabets allowed.";
+        } else {
+          error.textContent = "";
+        }
+      });
+
+      div.appendChild(input);
+      div.appendChild(error);
+      return div;
+    }
+
+
+    addHobbyBtn.addEventListener("click", () => {
+      hobbyContainer.appendChild(createHobbyInput());
+    });
+
+   
+    document.getElementById("hobbyForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      let valid = true;
+
+      const inputs = document.querySelectorAll("input[name='hobby[]']");
+      inputs.forEach((input) => {
+        const error = input.nextElementSibling;
+        if (input.value.trim() === "" || !regex.test(input.value)) {
+          error.textContent = "Please enter a valid hobby.";
+          valid = false;
+        } else {
+          error.textContent = "";
+        }
+      });
+
+      if (valid) {
+        alert("Form submitted successfully!");
+      }
+    });
+  </script>
+</body>
+</html>
